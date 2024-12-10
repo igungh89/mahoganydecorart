@@ -83,7 +83,7 @@ services:
           fi
         done;
         echo "sites/common_site_config.json found";
-        bench new-site --mariadb-user-host-login-scope=% --admin-password=${ADMIN_PASSWORD} --db-root-password=${DB_PASSWORD} --install-app erpnext --set-default frontend;
+        bench new-site --mariadb-user-host-login-scope='%' --admin-password=${ADMIN_PASSWORD} --db-root-password=${DB_PASSWORD} --install-app erpnext --set-default frontend;
 
   db:
     image: mariadb:10.6
