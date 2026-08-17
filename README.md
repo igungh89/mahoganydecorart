@@ -1,117 +1,126 @@
-<div align="center">
-  <img src="docs/public/frappe-docker.png" alt="Frappe Docker" width="80" />
-  <h1>Frappe Docker</h1>
-  <p>Docker images and orchestration for Frappe applications.</p>
-  <p>
-    <a href="https://github.com/frappe/frappe_docker/actions/workflows/core-build-stable.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/frappe/frappe_docker/core-build-stable.yml?branch=main&label=Build%20Stable" alt="Build Stable" />
-    </a>
-    <a href="https://github.com/frappe/frappe_docker/actions/workflows/core-build-develop.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/frappe/frappe_docker/core-build-develop.yml?branch=main&label=Build%20Develop" alt="Build Develop" />
-    </a>
-    <a href="https://frappe.github.io/frappe_docker/">
-      <img src="https://img.shields.io/badge/Docs-Open%20Site-0A7EA4" alt="Docs" />
-    </a>
-  </p>
-</div>
+# Mahogany Decor Art
 
-## What is this?
+Central repository for the Mahogany Decor Art digital system.
 
-This repository is the official container setup for Frappe applications.
+## Project Structure
 
-It provides Docker images, Compose configurations, and documentation for running Frappe applications, including ERPNext, CRM, Helpdesk, and other Frappe apps, in containers.
-
-Use it if you want to:
-
-- run ERPNext, CRM, Helpdesk, or other Frappe apps with Docker
-- start from a quick demo setup
-- use production-ready Docker images and Compose setups
-- build custom app images
-- deploy and operate Frappe in production
-
-## Repository Structure
-
-```bash
-frappe_docker/
-├── docs/                 # Complete documentation
-├── overrides/            # Docker Compose configurations for different scenarios
-├── compose.yaml          # Base Compose File for production setups
-├── pwd.yml               # Single Compose File for quick disposable demo
-├── images/               # Dockerfiles for building Frappe images
-├── development/          # Development environment configurations
-├── devcontainer-example/ # VS Code devcontainer setup
-└── resources/            # Helper scripts and configuration templates
+```text
+mahogany/
+├── erpnext/
+├── n8n/
+├── wordpress/
+└── infrastructure/
 ```
 
-> This section describes the structure of **this repository**, not the Frappe framework itself.
+##Stack
+###ERPNext
 
-### Key Components
+Business management system and custom Mahogany ERPNext application.
 
-- `docs/` - Canonical documentation for all deployment and operational workflows
-- `overrides/` - Opinionated Compose overrides for common deployment patterns
-- `compose.yaml` - Base compose file for production setups (production)
-- `pwd.yml` - Disposable demo environment (non-production)
+Current repository content includes the Mahogany custom ERPNext application under:
+````text
+erpnext/custom-app/mahogany/
+````
 
-## Documentation
+The ERPNext stack will be audited and documented separately.
 
-The full `frappe_docker` documentation is available in [`docs/`](docs/) and published at [frappe.github.io/frappe_docker](https://frappe.github.io/frappe_docker/).
+###n8n
 
-### Recommended entry points:
+Automation and workflow integration layer.
 
-- **New here:** [Getting Started Guide](docs/getting-started.md)
-- **Choosing a setup:** [Deployment methods](docs/01-getting-started/01-choosing-a-deployment-method.md)
-- **ARM64 notes:** [ARM64](docs/01-getting-started/03-arm64.md)
-- **Container setup overview:** [Container Setup Overview](docs/02-setup/01-overview.md)
-- **Running in production:** [Production docs](docs/03-production/)
-- **Operating a deployment:** [Operations docs](docs/04-operations/)
-- **Development workflows:** [Development](docs/05-development/01-development.md)
-- **FAQ:** [Frequently Asked Questions](https://github.com/frappe/frappe_docker/wiki/Frequently-Asked-Questions)
+The n8n stack will be added and documented separately.
 
-## Prerequisites
+###WordPress
 
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose v2](https://docs.docker.com/compose/)
-- [git](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git)
+Public website and web presence.
 
-> For Docker basics and best practices refer to Docker's [documentation](http://docs.docker.com)
+The WordPress stack will be added and documented separately.
 
-## Demo setup
+###Infrastructure
 
-The fastest way to try Frappe locally is with the single-file demo setup in `pwd.yml`.
+Infrastructure, Docker, deployment, networking, and server-related configuration.
 
-### Try on your environment
+The infrastructure stack will be added and documented separately.
 
-> **⚠️ Disposable demo only**
->
-> **This setup is intended for short-lived evaluation only.** You will not be able to install custom apps to this setup. For production deployments, custom configurations, and detailed explanations, see the full documentation.
+Repository Status
 
-First clone the repo:
+This repository is currently under active development and audit.
 
-```sh
-git clone https://github.com/frappe/frappe_docker
-cd frappe_docker
-```
+The current structure is intentionally kept simple while each technology stack is reviewed.
 
-Then run:
+Documentation and architecture will be updated as each stack is audited.
 
-```sh
-docker compose -f pwd.yml up -d
-```
+Source Control
 
-Wait for a couple of minutes for ERPNext site to be created or check `create-site` container logs before opening browser on port `8080`. (username: `Administrator`, password: `admin`)
+Primary branch:
 
-## Contributing
+main
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Repository:
 
-This repository is only for container related stuff. You also might want to contribute to:
+https://github.com/igungh89/mahoganydecorart
 
-## Resources
+Repository visibility:
 
-- [Frappe framework](https://github.com/frappe/frappe),
-- [ERPNext](https://github.com/frappe/erpnext),
-- [Frappe Bench](https://github.com/frappe/bench).
+Private
+Production Environment
 
-## License
+The Mahogany system currently runs on a VPS using Docker-based infrastructure.
 
-This repository is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+Production configuration and runtime data are kept separate from the Git repository.
+
+This repository is intended primarily for source control, documentation, configuration, and recovery of the project.
+
+Data & Security
+
+The following should not be committed to this repository:
+
+Production databases
+Database dumps
+Passwords
+API keys
+Access tokens
+Private SSH keys
+.env files containing secrets
+User-uploaded files
+Runtime logs
+Docker volumes
+Temporary files
+Python cache files
+Node modules
+Other sensitive production data
+
+Production data and backups should be managed separately.
+
+Development Principle
+
+Mahogany contains business-critical systems and custom business logic.
+
+Changes to production functionality should be made carefully and documented when appropriate.
+
+Existing production behavior should not be changed unintentionally during development, testing, or refactoring.
+
+Roadmap
+ Repository structure
+ ERPNext custom application source
+ Initial Git repository
+ GitHub repository
+ Initial GitHub backup
+ ERPNext audit
+ ERPNext architecture documentation
+ ERPNext development workflow
+ Infrastructure audit
+ Infrastructure documentation
+ n8n audit
+ n8n documentation
+ WordPress audit
+ WordPress documentation
+ Database backup documentation
+ Disaster recovery documentation
+ Deployment workflow
+ CI/CD workflow
+Project Status
+
+Status: Active Development & Audit
+
+The repository structure and documentation will evolve as the Mahogany system is reviewed and developed.

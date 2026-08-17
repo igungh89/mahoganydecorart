@@ -1,5 +1,9 @@
 # Environment Variables
 .env
+.env.*
+!.env.example
+*.secret
+*.secrets
 
 # mounted volume
 sites
@@ -10,12 +14,31 @@ development/*
 !development/apps-example.json
 !development/vscode-example/
 
-# Pycharm
-.idea
+# SSH / private keys
+*.pem
+*.key
+id_rsa
+id_ed25519
+id_ecdsa
 
-# VS Code
-.vscode/**
+# Databases & backups
+*.sql
+*.sql.gz
+*.dump
+*.bak
+backup/
+backups/
+
+# Logs
+*.log
+logs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
 !.vscode/extensions.json
+.idea/
 
 # VS Code devcontainer
 .devcontainer
@@ -23,8 +46,10 @@ development/*
 
 # Python
 *.pyc
-__pycache__
-venv
+__pycache__/
+*.egg-info/
+.venv/
+venv/
 
 # NodeJS
 node_modules
@@ -32,3 +57,11 @@ node_modules
 # VitePress
 **/.vitepress/dist
 **/.vitepress/cache
+
+# Docker runtime
+docker-data/
+volumes/
+
+# Temporary files
+tmp/
+temp/
