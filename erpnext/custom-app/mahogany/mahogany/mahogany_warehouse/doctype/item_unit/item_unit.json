@@ -1,0 +1,128 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2026-08-17 21:18:16.918292",
+ "custom": 1,
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "section_break_item",
+  "item",
+  "acquisition_type",
+  "acquisition_date",
+  "production_date",
+  "acquisition_cost",
+  "section_break_usage",
+  "usage_count",
+  "section_break_condition",
+  "condition",
+  "status",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "UNIT-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "section_break_item",
+   "fieldtype": "Section Break",
+   "label": "Informasi Barang"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item Master",
+   "read_only": 1
+  },
+  {
+   "fieldname": "acquisition_type",
+   "fieldtype": "Select",
+   "label": "Sumber Perolehan",
+   "options": "Purchased\nProduced"
+  },
+  {
+   "fieldname": "acquisition_date",
+   "fieldtype": "Date",
+   "label": "Tanggal Perolehan"
+  },
+  {
+   "fieldname": "production_date",
+   "fieldtype": "Date",
+   "label": "Tanggal Produksi"
+  },
+  {
+   "fieldname": "acquisition_cost",
+   "fieldtype": "Currency",
+   "label": "Harga Perolehan"
+  },
+  {
+   "fieldname": "section_break_usage",
+   "fieldtype": "Section Break",
+   "label": "Informasi Pemakaian"
+  },
+  {
+   "fieldname": "usage_count",
+   "fieldtype": "Int",
+   "label": "Jumlah Pemakaian"
+  },
+  {
+   "fieldname": "section_break_condition",
+   "fieldtype": "Section Break",
+   "label": "Informasi Kondisi"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Select",
+   "label": "Kondisi",
+   "options": "Good\nFair\nDamaged\nUnder Repair"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Available\nAllocated\nIn Use\nMaintenance\nDamaged\nLost\nRetired"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-17 21:24:32.915009",
+ "modified_by": "igun.gunawan89@gmail.com",
+ "module": "Mahogany Warehouse",
+ "name": "Item Unit",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "igun.gunawan89@gmail.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "naming_series",
+ "track_changes": 1
+}

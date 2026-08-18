@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2026-08-18 03:42:36.137822",
+ "custom": 1,
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "section_break_movement",
+  "movement_title",
+  "movement_date",
+  "movement_type",
+  "source_type",
+  "reference_doctype",
+  "source_reference",
+  "from_warehouse",
+  "to_warehouse",
+  "owner_type",
+  "external_owner",
+  "items",
+  "status",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "SM-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "section_break_movement",
+   "fieldtype": "Section Break",
+   "label": "Informasi Pergerakan"
+  },
+  {
+   "fieldname": "movement_title",
+   "fieldtype": "Data",
+   "label": "Pergerakan"
+  },
+  {
+   "fieldname": "movement_date",
+   "fieldtype": "Date",
+   "label": "Tanggal Pergerakan"
+  },
+  {
+   "fieldname": "movement_type",
+   "fieldtype": "Select",
+   "label": "Jenis Pergerakan",
+   "options": "Receipt\nIssue\nTransfer\nReturn"
+  },
+  {
+   "fieldname": "source_type",
+   "fieldtype": "Select",
+   "label": "Sumber Transaksi",
+   "options": "Purchase\nRental\nWorkshop\nWarehouse\nOther"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Jenis Referensi",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "source_reference",
+   "fieldtype": "Dynamic Link",
+   "label": "Referensi Transaksi",
+   "options": "reference_doctype"
+  },
+  {
+   "fieldname": "from_warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse Asal",
+   "options": "Mahogany Warehouse"
+  },
+  {
+   "fieldname": "to_warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse Tujuan",
+   "options": "Mahogany Warehouse"
+  },
+  {
+   "fieldname": "owner_type",
+   "fieldtype": "Select",
+   "label": "Jenis Pemilik",
+   "options": "Mahogany\nPartner"
+  },
+  {
+   "depends_on": "eval:doc.owner_type==\"Partner\"",
+   "fieldname": "external_owner",
+   "fieldtype": "Link",
+   "label": "Pemilik Barang",
+   "options": "Business Partner"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Daftar Barang",
+   "options": "Stock Movement Item"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nSubmitted\nCompleted\nCancelled"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-18 04:12:45.828293",
+ "modified_by": "igun.gunawan89@gmail.com",
+ "module": "Mahogany Warehouse",
+ "name": "Stock Movement Mahogany",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "igun.gunawan89@gmail.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "movement_title",
+ "track_changes": 1
+}

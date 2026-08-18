@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2026-08-18 01:09:21.392446",
+ "custom": 1,
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "section_break_receipt",
+  "receipt_title",
+  "receipt_date",
+  "purchase_order",
+  "partner",
+  "warehouse",
+  "status",
+  "items",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "GR-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "section_break_receipt",
+   "fieldtype": "Section Break",
+   "label": "Informasi Penerimaan"
+  },
+  {
+   "fieldname": "receipt_title",
+   "fieldtype": "Data",
+   "label": "Penerimaan"
+  },
+  {
+   "fieldname": "receipt_date",
+   "fieldtype": "Date",
+   "label": "Tanggal Penerimaan"
+  },
+  {
+   "fieldname": "purchase_order",
+   "fieldtype": "Link",
+   "label": "Purchase Order",
+   "options": "Purchase Order"
+  },
+  {
+   "fieldname": "partner",
+   "fieldtype": "Link",
+   "label": "Partner",
+   "options": "Business Partner"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Gudang Tujuan",
+   "options": "Mahogany Warehouse"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nReceived\nCancelled"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Daftar Barang",
+   "options": "Goods Receipt Item"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-18 01:14:33.490578",
+ "modified_by": "igun.gunawan89@gmail.com",
+ "module": "Mahogany Purchasing",
+ "name": "Goods Receipt",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "igun.gunawan89@gmail.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "receipt_title",
+ "track_changes": 1
+}
