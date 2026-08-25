@@ -101,7 +101,7 @@ Create an environment file for the bench:
 
 ```shell
 cp example.env ~/gitops/erpnext.env
-sed -i 's/DB_PASSWORD=123/DB_PASSWORD=${DB_PASSWORD}/g' ~/gitops/erpnext.env
+sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=${DB_PASSWORD}/g' ~/gitops/erpnext.env
 echo 'NGINX_PROXY_HOSTS=erp.your-domain.com,crm.your-domain.com' >> ~/gitops/erpnext.env
 echo 'LETSENCRYPT_EMAIL=admin@your-domain.com' >> ~/gitops/erpnext.env
 ```
