@@ -143,7 +143,7 @@ Create a file called `erpnext-one.env` in `~/gitops`
 
 ```shell
 cp example.env ~/gitops/erpnext-one.env
-sed -i 's/DB_PASSWORD=123/DB_PASSWORD=${DB_PASSWORD}/g' ~/gitops/erpnext-one.env
+sed -i 's/DB_PASSWORD=${DB_PASSWORD}/DB_PASSWORD=${DB_PASSWORD}/g' ~/gitops/erpnext-one.env
 sed -i 's/DB_HOST=/DB_HOST=mariadb-database/g' ~/gitops/erpnext-one.env
 sed -i 's/DB_PORT=/DB_PORT=3306/g' ~/gitops/erpnext-one.env
 sed -i 's/SITES_RULE=Host(`erp.example.com`)/SITES_RULE=Host(`one.example.com`) || Host(`two.example.com`)/g' ~/gitops/erpnext-one.env
@@ -204,7 +204,7 @@ Create a file called `erpnext-two.env` in `~/gitops`
 
 ```shell
 curl -sL https://raw.githubusercontent.com/frappe/frappe_docker/main/example.env -o ~/gitops/erpnext-two.env
-sed -i 's/DB_PASSWORD=123/DB_PASSWORD=${DB_PASSWORD}/g' ~/gitops/erpnext-two.env
+sed -i 's/DB_PASSWORD=${DB_PASSWORD}/DB_PASSWORD=${DB_PASSWORD}/g' ~/gitops/erpnext-two.env
 sed -i 's/DB_HOST=/DB_HOST=mariadb-database/g' ~/gitops/erpnext-two.env
 sed -i 's/DB_PORT=/DB_PORT=3306/g' ~/gitops/erpnext-two.env
 echo "ROUTER=erpnext-two" >> ~/gitops/erpnext-two.env

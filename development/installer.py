@@ -3,6 +3,9 @@ import argparse
 import os
 import subprocess
 
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+
 
 def cprint(*args, level: int = 1):
     """
@@ -29,6 +32,16 @@ def cprint(*args, level: int = 1):
 def main():
     parser = get_args_parser()
     args = parser.parse_args()
+
+    if not DB_PASSWORD:
+        parser.error("DB_PASSWORD environment variable is required")
+
+    if not args.admin_password:
+        parser.error(
+            "Admin password is required. "
+            "Use --admin-password or ADMIN_PASSWORD environment variable."
+        )
+
     init_bench_if_not_exist(args)
     create_site_in_bench(args)
 
@@ -211,7 +224,7 @@ def create_site_in_bench(args):
             f"--db-host=mariadb",  # Should match the compose service name
             f"--db-type={args.db_type}",  # Add the selected database type
             f"--mariadb-user-host-login-scope=%",
-            f"--db-root-password=${DB_PASSWORD}",  # Replace with your MariaDB password
+            f"--db-root-password={DB_PASSWORD}",
             f"--admin-password={args.admin_password}",
         ]
     else:
@@ -226,7 +239,7 @@ def create_site_in_bench(args):
             f"--db-root-username=root",
             f"--db-host=postgresql",  # Should match the compose service name
             f"--db-type={args.db_type}",  # Add the selected database type
-            f"--db-root-password=${DB_PASSWORD}",  # Replace with your PostgreSQL password
+            f"--db-root-password={DB_PASSWORD}",
             f"--admin-password={args.admin_password}",
         ]
     apps = os.listdir(f"{os.getcwd()}/{args.bench_name}/apps")

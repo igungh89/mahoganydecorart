@@ -1,298 +1,494 @@
-# Mahogany Decor Art
+# Mahogany Decor Art — Custom ERP Platform
 
-Central repository for the **Mahogany Decor Art digital business system**.
+A custom ERP platform built with **Frappe Framework and ERPNext**, extended to support the operational requirements of an event and wedding decoration business.
 
-This repository contains the source code, custom business applications, infrastructure configuration, automation components, documentation, and recovery-related information used to develop and maintain the Mahogany digital platform.
+The project combines ERPNext's standard capabilities with custom business logic for **CRM, event management, purchasing, warehouse & inventory, rental operations, and business automation**.
 
-> **Repository visibility:** Private  
-> **Primary branch:** `main`  
-> **Status:** Active Development & Audit
-
----
-
-## Overview
-
-Mahogany Decor Art uses a modular digital platform built around several technology stacks.
-
-The system is designed to support business operations while keeping application source code, infrastructure, automation, and public website components organized in a single repository.
-
-### Main Components
-
-| Component | Purpose |
-|---|---|
-| **ERPNext** | Business management and operational system |
-| **n8n** | Automation and workflow integration |
-| **WordPress** | Public website and web presence |
-| **Infrastructure** | Docker, deployment, networking, and server configuration |
+> **Portfolio Project**
+>
+> This repository contains the public-facing source code and technical documentation of the Mahogany ERP project. Production credentials, databases, backups, and private infrastructure configuration are intentionally excluded.
 
 ---
 
-## System Architecture
+## Project Overview
+
+Event and wedding decoration businesses have operational requirements that do not always fit standard ERP workflows.
+
+Mahogany ERP was designed to address those requirements while continuing to use ERPNext as the underlying ERP foundation.
+
+The system covers the operational flow from:
 
 ```text
-Mahogany Decor Art
-│
-├── ERPNext
-│   ├── Frappe Framework
-│   ├── ERPNext
-│   ├── Mahogany custom application
-│   └── Additional custom applications
-│
-├── n8n
-│   └── Automation & workflow integration
-│
-├── WordPress
-│   └── Public website
-│
-└── Infrastructure
-    ├── Docker
-    ├── Deployment
-    ├── Networking
-    └── Server configuration
+Client Inquiry
+      ↓
+Lead & CRM
+      ↓
+Availability & Capacity
+      ↓
+Booking
+      ↓
+Event Project
+      ↓
+Requirements & Allocation
+      ↓
+Purchasing / Warehouse
+      ↓
+Event Execution
+      ↓
+Returns & Inventory Updates
+```
 
-ERPNext
+The objective is to build a system around the actual business process rather than forcing the business to adapt to a generic ERP workflow.
 
-ERPNext is the primary business management platform for Mahogany Decor Art.
+---
 
-The platform uses the Frappe Framework together with ERPNext and custom Mahogany business logic.
+## Core Modules
 
-Current Versions
-| Component    | Version |
-| ------------ | ------- |
-| Frappe       | 16.29.0 |
-| ERPNext      | 16.30.0 |
-| Mahogany     | 0.0.1   |
-| bypass_phone | 0.0.1   |
+### CRM
 
-Installed Applications
-frappe
-erpnext
-mahogany
-bypass_phone
+Custom CRM functionality manages the client lifecycle from initial inquiry through booking.
 
-Custom Application
+Example workflow:
 
-The main Mahogany business logic is maintained as a custom Frappe application:
+```text
+Client Inquiry
+      ↓
+Lead
+      ↓
+Availability Check
+      ↓
+Meeting / Follow-up
+      ↓
+Booking
+      ↓
+Event Project
+```
+
+Custom logic handles event dates, booking allocation, and operational capacity.
+
+---
+
+### Event Project
+
+The Event Project layer connects the commercial process with operational execution.
+
+It provides the foundation for:
+
+* Event dates
+* Service requirements
+* Crew requirements
+* Item requirements
+* Project status
+* Booking allocation
+* Operational preparation
+
+The architecture distinguishes between an **opportunity/slot** and an actual confirmed project.
+
+This allows availability and capacity to be evaluated before a booking becomes an operational project.
+
+---
+
+### Purchasing
+
+The purchasing module extends ERPNext to match the company's procurement workflow.
+
+Key processes include:
+
+* Purchase Request
+* Purchase Order
+* Goods Receipt
+* Purchase Return
+* Supplier / Business Partner management
+
+Purchasing is connected with warehouse receiving and inventory operations so that procurement activities can flow into the operational inventory system.
+
+---
+
+### Warehouse & Inventory
+
+Warehouse and inventory are one of the main custom development areas.
+
+The system manages:
+
+* Item Categories
+* Item Master
+* Individual Item Units
+* Warehouse
+* Locations
+* Stock Movements
+* Stock Opname
+* Item Allocation
+
+A key architectural decision is separating the **item definition** from the **physical item unit**.
+
+For example:
+
+```text
+Item Master
+"Chiavari Chair"
+      │
+      ├── CHAIR-0001
+      ├── CHAIR-0002
+      ├── CHAIR-0003
+      └── CHAIR-0004
+```
+
+This allows reusable and asset-type inventory to be tracked individually, including its physical status and location.
+
+---
+
+## Item Lifecycle
+
+The warehouse architecture supports different operational behaviors:
+
+```text
+Consumable
+Reusable
+Asset
+Rental
+```
+
+Procurement and item lifecycle are intentionally separated.
+
+This allows the system to distinguish between:
+
+**How was the item acquired?**
+
+and:
+
+**How should the item behave operationally?**
+
+This separation provides flexibility for future procurement and inventory workflows.
+
+---
+
+## Stock Movement
+
+Stock operations are handled through a unified transaction model.
+
+The intended lifecycle is:
+
+```text
+Draft
+  ↓
+Allocated / Reserved
+  ↓
+Completed / Submitted
+  ↓
+Cancelled
+```
+
+Important business rules include:
+
+* Draft transactions do not automatically reserve stock.
+* Physical cancellation of an OUT movement is handled through a return movement.
+* Corrections are represented through reverse movements rather than silently modifying historical transactions.
+* Individual units maintain their own physical status and location.
+* Stock balance and individual-unit state are synchronized during movement processing.
+
+The goal is to maintain a clear transaction history instead of relying on direct inventory quantity manipulation.
+
+---
+
+## Item Allocation
+
+The allocation layer connects operational requirements with available inventory.
+
+The architecture separates:
+
+```text
+Requirement
+     ↓
+Allocation
+     ↓
+Physical Item
+     ↓
+Event / Project
+```
+
+This allows inventory to be planned and allocated before the actual warehouse movement takes place.
+
+For an event-based business, this is important because the same physical inventory may be required by different projects on different dates.
+
+---
+
+## Rental Management
+
+Custom rental workflows are implemented for rental-oriented inventory.
+
+The rental lifecycle is designed around the physical movement and condition of rented items:
+
+```text
+Rental Request
+      ↓
+Rental Order
+      ↓
+Rental Receipt
+      ↓
+Rental Inspection
+      ↓
+Rental Return
+```
+
+The inspection stage allows the operational condition of returned items to be handled as part of the rental workflow rather than treating the process as a simple sales transaction.
+
+---
+
+## Custom Development
+
+The project extends ERPNext using the native capabilities of the Frappe Framework.
+
+Custom development includes:
+
+* Custom DocTypes
+* Child Tables
+* Client Scripts
+* Server-side Python logic
+* REST/API endpoints
+* Custom workflows
+* Workspace configuration
+* Custom JavaScript
+* Business validation
+* Inventory synchronization
+* Event-driven automation
+* Custom web forms
+
+The primary custom application is located under:
+
+```text
+custom-apps/mahogany/
+```
+
+Additional supporting applications are maintained under:
+
+```text
 custom-apps/
-└── mahogany/
+```
 
-The custom application contains functionality specific to Mahogany Decor Art and is maintained separately from the standard ERPNext source.
+---
 
-ERPNext Site
+## Architecture
 
-Production ERPNext is deployed as:
+High-level architecture:
 
+```text
+                    ┌───────────────────┐
+                    │       Users       │
+                    └─────────┬─────────┘
+                              │
+                              ▼
+                    ┌───────────────────┐
+                    │ Frappe / ERPNext  │
+                    └─────────┬─────────┘
+                              │
+               ┌──────────────┼──────────────┐
+               │              │              │
+               ▼              ▼              ▼
+        ┌────────────┐ ┌────────────┐ ┌────────────┐
+        │  Mahogany  │ │  ERPNext   │ │   Custom   │
+        │    App     │ │  Features  │ │   Logic    │
+        └────────────┘ └────────────┘ └────────────┘
+                              │
+                              ▼
+                       ┌────────────┐
+                       │  MariaDB   │
+                       └────────────┘
 
-Production runtime data is intentionally kept outside the Git repository.
+Supporting services:
+- Redis
+- Docker
+- Reverse Proxy / SSL
+```
 
-n8n
+The production environment is containerized using Docker.
 
-n8n is used as the automation and workflow integration layer.
+---
 
-It is intended to connect business processes and external services without placing integration logic directly inside every application.
+## Technology Stack
 
-Automation workflows are maintained separately from the ERPNext application logic.
-n8n/
+| Layer            | Technology                 |
+| ---------------- | -------------------------- |
+| ERP Framework    | Frappe Framework           |
+| ERP              | ERPNext                    |
+| Backend          | Python                     |
+| Frontend Logic   | JavaScript                 |
+| Database         | MariaDB                    |
+| Cache / Queue    | Redis                      |
+| Containerization | Docker                     |
+| Reverse Proxy    | Nginx-based infrastructure |
+| Source Control   | Git / GitHub               |
 
-The n8n stack is currently under active development and documentation.
+---
 
-WordPress
+## Repository Structure
 
-WordPress is used as the public-facing website and web presence for Mahogany Decor Art.
-
-wordpress/
-
-The WordPress stack is maintained separately from the ERPNext business system while remaining part of the overall Mahogany platform.
-
-Infrastructure
-
-Infrastructure configuration is maintained in:
-infrastructure/
-
-This area covers infrastructure-related configuration such as:
-
-Docker
-Deployment
-Networking
-Server configuration
-Supporting infrastructure services
-
-Production runtime data, Docker volumes, and other generated runtime data are not maintained as source-controlled application files.
-
-Repository Structure
-
-Current repository structure:
-
+```text
 mahogany/
 │
-├── backups/
-│   └── audits/
-│       └── erpnext/
-│
 ├── custom-apps/
-│   └── mahogany/
+│   ├── mahogany/
+│   └── bypass_phone/
 │
 ├── infrastructure/
-│
 ├── n8n/
-│
 ├── wordpress/
+├── overrides/
+├── development/
+├── tests/
 │
 ├── compose.yaml
-├── apps.json
-├── README.md
-└── other project configuration
+├── pwd.example.yml
+├── example.env
+├── DEPLOY_RESTORE.md
+└── README.md
+```
 
-The repository structure is intentionally organized by system responsibility so each major component can be developed, audited, and documented independently.
+The repository contains public source code and deployment templates.
 
-Backup & Recovery
+Production credentials, databases, runtime volumes, and private configuration are intentionally excluded.
 
-Backup strategy separates source code from production data.
+---
 
-Source Code Backup
+## Security & Configuration
 
-Git is used as the primary source-control and source-code recovery mechanism.
+The project separates **public configuration templates** from **private production configuration**.
 
-The repository contains:
+Sensitive values such as:
 
-Custom applications
-Infrastructure configuration
-Automation source
-Website-related source/configuration
-Project documentation
-Architecture and audit information
+* Database passwords
+* Administrator passwords
+* API credentials
+* SSH keys
+* Environment secrets
+* Production databases
+* Backups
 
-Changes are tracked through Git commits and pushed to the private GitHub repository.
+are not intended to be stored in the public repository.
 
-ERPNext Site Backup
+Public configuration uses environment variables instead of hard-coded credentials:
 
-ERPNext site backups are created separately using the Frappe backup mechanism.
+```yaml
+MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+```
 
-A full site backup was successfully performed on:
-2026-08-25
+Production credentials are supplied separately during deployment.
 
-Using:
-bench --site frontend backup --with-files
+---
 
-The backup included:
-Site configuration
-Database
-Public files
-Private files
+## Engineering Approach
 
-The backup is stored in the ERPNext environment and is not committed to Git.
+### Business-first Design
 
-Detailed audit information is maintained under:
-backups/audits/erpnext/
+The system is designed around the actual operational workflow of the business.
 
-Database Policy
+### Reuse ERPNext Where Appropriate
 
-Production databases and database dumps are intentionally excluded from Git version control.
+Standard ERPNext functionality is used whenever it already solves the requirement.
 
-This prevents sensitive production data from being exposed through the source repository.
+Custom development is introduced where the business requires behavior beyond the standard ERPNext workflow.
 
-Security & Data Policy
+### Single Source of Truth
 
-The following should never be committed to this repository:
+Master data and operational state are designed around centralized models rather than duplicated information.
 
-Production databases
-Database dumps
-Passwords
-API keys
-Access tokens
-Private SSH keys
-.env files containing secrets
-User-uploaded production files
-Runtime logs
-Docker volumes
-Temporary files
-Python cache files
-Node modules
-Other sensitive production data
+### Traceability
 
-Production data and production backups are managed separately from the source repository.
+Important inventory changes are represented through transactions instead of silently overwriting historical state.
 
-Development Principle
+### Separation of Concerns
 
-Mahogany contains business-critical systems and custom business logic.
+Master data, physical inventory units, requirements, allocation, and stock movement are treated as separate concepts.
 
-Development therefore follows several principles:
+---
 
-Production behavior should not be changed unintentionally.
-Existing business logic should be preserved unless a change is explicitly required.
-Changes should be reviewed before being deployed to production.
-Production database data should not be used for destructive testing.
-Backup and recovery procedures should be established before major system changes.
-Important architectural and business decisions should be documented.
+## What This Project Demonstrates
 
-The goal is to keep the system maintainable while minimizing the risk of unintended changes to production behavior.
+This project demonstrates practical experience in:
 
-Source Control
+* ERPNext customization
+* Frappe Framework development
+* Python backend development
+* JavaScript client-side development
+* Custom DocType architecture
+* Business workflow design
+* Inventory architecture
+* Individual asset and unit tracking
+* Rental management
+* Purchasing workflows
+* REST/API development
+* Docker-based deployment
+* Git-based development workflow
+* Production-oriented infrastructure
+* Security separation between source code and credentials
 
-The primary branch is:
-main
+---
 
-Remote repository:
-git@github.com:igungh89/mahoganydecorart.git
+## Why Custom ERP?
 
-The repository is maintained as a private GitHub repository.
+Generic ERP software provides a strong foundation, but every business has operational rules that may not fit standard workflows.
 
-Git is used to provide:
+The approach used in this project is:
 
-Version history
-Change tracking
-Source recovery
-Collaboration
-Deployment preparation
-Auditability
+```text
+Business Requirement
+        ↓
+Business Process
+        ↓
+System Architecture
+        ↓
+ERPNext Foundation
+        ↓
+Custom Business Logic
+        ↓
+Operational Workflow
+```
 
-Project Roadmap
+The result is an ERP platform adapted to the business rather than forcing the business to work around the ERP.
 
-The project is being progressively audited and documented.
+---
 
-Completed / In Progress
- Repository structure
- Initial Git repository
- GitHub repository
- Initial GitHub backup
- ERPNext custom application source
- ERPNext source reconciliation
- ERPNext backup
- ERPNext backup audit
- ERPNext architecture documentation
- ERPNext development workflow
- Infrastructure audit
- Infrastructure documentation
- n8n audit
- n8n documentation
- WordPress audit
- WordPress documentation
- Database backup documentation
- Disaster recovery documentation
- Deployment workflow
- CI/CD workflow
+## Current Status
 
-Project Status
+**Active development**
 
-Status: Active Development & Audit
+The platform is being developed incrementally, with modules introduced and refined according to operational requirements.
 
-The Mahogany digital platform is actively being developed and documented.
+Some components are production-oriented while others remain under active development.
 
-The repository structure and documentation will evolve as each system component is reviewed.
+---
 
-Major changes should be committed with clear commit messages and kept synchronized with the primary GitHub repository.
+## Portfolio / Client Work
 
-Notes for Contributors
+This repository demonstrates an approach that can be applied to custom business systems such as:
 
-Before making changes to production-related functionality:
+* ERP implementation
+* ERPNext customization
+* Inventory management
+* Warehouse management
+* Purchasing systems
+* Rental management
+* CRM workflows
+* Business process automation
+* API integrations
+* Docker-based deployments
 
-Understand the existing business logic.
-Check the current source and documentation.
-Avoid destructive testing against production data.
-Create appropriate backups before major changes.
-Review the resulting changes before deployment.
-Commit meaningful changes with descriptive commit messages.
+The focus is not simply on implementing software features, but on translating business processes into maintainable system architecture.
 
-Mahogany Decor Art
-Digital Business Platform
-Private Repository
+---
+
+## License
+
+This repository contains custom project work built on top of open-source technologies.
+
+Refer to the individual application directories for applicable licensing information.
+
+---
+
+## Author
+
+**Igun Gunawan, ST**
+
+Custom ERP & Business Automation Developer
+
+**ERPNext · Frappe · Python · JavaScript · Docker · Automation**
