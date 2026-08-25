@@ -12,7 +12,7 @@ Mahogany ERPNext runs in a Docker-based production environment.
 | bypass_phone | 0.0.1 |
 | Database | MariaDB 11.8 |
 | Site | frontend |
-| Production Domain |  |
+| Production Domain | `<your-production-domain>` |
 | Container Image | frappe/erpnext:v16.30.0-custom |
 
 > **Environment snapshot:** Verified on 2026-08-25.

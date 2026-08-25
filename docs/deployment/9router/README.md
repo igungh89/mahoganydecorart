@@ -18,7 +18,7 @@
 9router uses a host bind mount for application data:
 
 ```text
-/.9router
+~/.9router
     -> /app/data
 
 Network

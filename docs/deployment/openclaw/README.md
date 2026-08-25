@@ -20,13 +20,13 @@ OpenClaw runs as a Docker-based service on the Mahogany VPS.
 OpenClaw uses host bind mounts for its configuration, authentication secrets, and workspace.
 
 ```text
-/.openclaw-auth-profile-secrets
+~/.openclaw-auth-profile-secrets
     -> /home/node/.config/openclaw
 
-/.openclaw
+~/.openclaw
     -> /home/node/.openclaw
 
-/.openclaw/workspace
+~/.openclaw/workspace
     -> /home/node/.openclaw/workspace
 
 Backup
