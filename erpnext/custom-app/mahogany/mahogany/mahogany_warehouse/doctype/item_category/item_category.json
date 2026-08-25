@@ -27,14 +27,14 @@
    "default": "0",
    "fieldname": "is_active",
    "fieldtype": "Check",
-   "label": "Status"
+   "label": "Aktif"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-16 10:13:39.298596",
- "modified_by": "Administrator",
+ "modified": "2026-08-20 20:05:59.750831",
+ "modified_by": "igun.gunawan89@gmail.com",
  "module": "Mahogany Warehouse",
  "name": "Item Category",
  "naming_rule": "By fieldname",

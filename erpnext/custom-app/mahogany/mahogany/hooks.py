@@ -257,3 +257,15 @@ app_license = "mit"
 
 
 import mahogany.phone_validation
+
+
+
+
+
+
+
+
+
+
+
+app_include_js = "unsaved_changes.bundle.js"
