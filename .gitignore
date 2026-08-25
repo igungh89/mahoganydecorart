@@ -65,3 +65,6 @@ volumes/
 # Temporary files
 tmp/
 temp/
+
+# Production deployment config (private)
+pwd.yml
