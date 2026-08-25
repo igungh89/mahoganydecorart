@@ -2,13 +2,5 @@
   {
     "url": "https://github.com/frappe/erpnext",
     "branch": "version-16"
-  },
-  {
-    "url": "",
-    "branch": "main"
-  },
-  {
-    "url": "",
-    "branch": "phone"
   }
 ]
